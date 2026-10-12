@@ -39,3 +39,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/app/generated/prisma
+
+# agent logs and dumps
+.agents/
+.claude/
+.windsurf/
+RK-*.txt
+*.txt
+app/globals.css.broken
+app/page.before-marketplace.tsx
+code
+
