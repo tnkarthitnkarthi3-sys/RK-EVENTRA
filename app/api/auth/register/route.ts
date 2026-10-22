@@ -66,11 +66,11 @@ export async function POST(request: Request) {
       );
     }
 
-    if (password.length < 6) {
+    if (password.length < 4) {
       return NextResponse.json(
         {
           success: false,
-          message: "Password must be at least 6 characters.",
+          message: "Password must be at least 4 characters.",
         },
         { status: 400 }
       );

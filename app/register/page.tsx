@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -91,7 +91,7 @@ export default function RegisterPage() {
         return;
       }
 
-      router.replace("/login");
+      router.replace("/customer/dashboard");
     } catch (error) {
       console.error("Registration error:", error);
 
@@ -511,7 +511,7 @@ export default function RegisterPage() {
                     }
                     placeholder="Create a secure password"
                     autoComplete="new-password"
-                    minLength={6}
+                    minLength={4}
                     required
                     className="w-full rounded-2xl border border-white/10 bg-black/20 py-3.5 pl-12 pr-14 text-sm text-white outline-none placeholder:text-slate-600 transition focus:border-fuchsia-400/50 focus:bg-black/30 focus:ring-4 focus:ring-fuchsia-500/10"
                   />
@@ -533,7 +533,7 @@ export default function RegisterPage() {
                 </div>
 
                 <p className="mt-2 text-xs text-slate-600">
-                  🔐 Use at least 6 characters.
+                  🔐 Use at least 4 characters.
                 </p>
 
               </div>
