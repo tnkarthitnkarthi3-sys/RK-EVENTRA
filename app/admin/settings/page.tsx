@@ -657,6 +657,35 @@ export default function AdminSettingsPage() {
                 </div>
               </div>
 
+              {/* SECTION 4.5: ADMIN AUTHENTICATION IDENTITY */}
+              <div className="bg-[#0e172e]/80 rounded-3xl p-6 sm:p-7 border border-cyan-500/25 shadow-xl backdrop-blur-md space-y-4">
+                <div className="flex items-center gap-3 pb-3 border-b border-slate-800">
+                  <div className="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center font-bold">
+                    <ShieldCheck className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h2 className="text-base font-bold text-white">Fixed Admin Security Identity</h2>
+                    <p className="text-xs text-slate-400">Master authentication credentials for platform governance.</p>
+                  </div>
+                </div>
+                <div className="space-y-3 text-xs">
+                  <div className="flex items-center justify-between p-3 rounded-xl bg-[#070b14] border border-slate-800">
+                    <span className="font-semibold text-slate-300">Admin Email (Fixed)</span>
+                    <span className="font-mono font-bold text-cyan-300">admineventra@gmail.com</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 rounded-xl bg-[#070b14] border border-slate-800">
+                    <span className="font-semibold text-slate-300">Admin Password (Fixed)</span>
+                    <span className="font-mono font-bold text-amber-300">admineventra</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 rounded-xl bg-[#070b14] border border-slate-800">
+                    <span className="font-semibold text-slate-300">Security Clearance</span>
+                    <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 font-bold">
+                      SUPER ADMIN
+                    </span>
+                  </div>
+                </div>
+              </div>
+
               {/* SECTION 5: PAYMENT GATEWAY STATUS BADGE */}
               <div className="bg-[#0e172e]/80 rounded-3xl p-6 sm:p-7 border border-amber-500/20 shadow-xl backdrop-blur-md space-y-4">
                 <div className="flex items-center gap-3 pb-3 border-b border-slate-800">

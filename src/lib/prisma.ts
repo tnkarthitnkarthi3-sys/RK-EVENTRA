@@ -1,4 +1,3 @@
-
 import { PrismaClient } from "@prisma/client";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import mariadb from "mariadb";
@@ -9,7 +8,10 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 const databaseUrl = process.env.DATABASE_URL || "mysql://root:karthi2008@localhost:3306/rkeventra";
-const connectionString = databaseUrl.replace(/^mysql:\/\//, "mariadb://");
+let connectionString = databaseUrl.replace(/^mysql:\/\//, "mariadb://");
+if (!connectionString.includes("allowPublicKeyRetrieval")) {
+  connectionString += (connectionString.includes("?") ? "&" : "?") + "allowPublicKeyRetrieval=true";
+}
 
 const pool = globalForPrisma.pool ?? mariadb.createPool(connectionString);
 const adapter = new PrismaMariaDb(pool as any);
@@ -25,4 +27,3 @@ if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = prisma;
   globalForPrisma.pool = pool;
 }
-

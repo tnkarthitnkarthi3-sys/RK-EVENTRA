@@ -346,6 +346,58 @@ async function runTestSuite() {
   const batExists = fs.existsSync("c:\\Users\\R KARTHIKEYAN\\Downloads\\RK EVENTRA\\RUN_RK_EVENTRA.bat");
   assert("RUN_RK_EVENTRA.bat exists in project folder for 1-click launch", batExists);
 
+  // --- TEST GROUP 10: FIXED ADMIN, PROFILE EDITING & 3D LIVE FLOWCHART ---
+  console.log("\n--- TEST GROUP 10: FIXED ADMIN & 3D LIVE FLOWCHART VERIFICATIONS ---");
+
+  // 1. Fixed Admin verification
+  const bcrypt = await import("bcryptjs");
+  const fixedAdmin = await prisma.user.findUnique({
+    where: { email: "admineventra@gmail.com" },
+  });
+  assert(
+    "Fixed admin user admineventra@gmail.com exists with role ADMIN",
+    fixedAdmin !== null && fixedAdmin.role === "ADMIN"
+  );
+
+  const pwdMatches = fixedAdmin ? await bcrypt.compare("admineventra", fixedAdmin.password) : false;
+  assert(
+    "Fixed admin password 'admineventra' matches cryptographically",
+    pwdMatches
+  );
+
+  // 2. Customer profile editable in database
+  const tempCustomer = await prisma.user.create({
+    data: {
+      email: "temp.customer.test@rkeventra.com",
+      name: "Temporary Customer",
+      password: await bcrypt.hash("password123", 10),
+      phone: "+91 99999 11111",
+      role: "CUSTOMER",
+    },
+  });
+  const updatedCustomer = await prisma.user.update({
+    where: { id: tempCustomer.id },
+    data: {
+      name: "Updated Customer Name",
+      phone: "+91 98888 22222",
+    },
+  });
+  assert(
+    "Customer can edit their own profile name and phone details",
+    updatedCustomer.name === "Updated Customer Name" && updatedCustomer.phone === "+91 98888 22222"
+  );
+  await prisma.user.delete({ where: { id: tempCustomer.id } });
+
+  // 3. 3D Live Ecosystem Flowchart component exists
+  const flowchartExists = fs.existsSync("c:\\Users\\R KARTHIKEYAN\\Downloads\\RK EVENTRA\\src\\components\\admin\\LiveEcosystem3DFlowchart.tsx");
+  assert("LiveEcosystem3DFlowchart.tsx exists with 3D pipeline architecture", flowchartExists);
+
+  // 4. 3D CSS utilities exist
+  const cssContent = fs.readFileSync("c:\\Users\\R KARTHIKEYAN\\Downloads\\RK EVENTRA\\app\\globals.css", "utf-8");
+  assert("app/globals.css contains 3D template utilities (.card-3d, .perspective-1000, .float-3d)", 
+    cssContent.includes(".card-3d") && cssContent.includes(".perspective-1000") && cssContent.includes("float-3d")
+  );
+
   console.log("\n============================================================");
   console.log(`TOTAL TESTS: ${passed + failed} | PASSED: ${passed} | FAILED: ${failed}`);
   console.log("============================================================\n");
